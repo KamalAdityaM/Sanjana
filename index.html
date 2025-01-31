@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Will You Be My Valentine?</title>
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500&family=Sacramento&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Quicksand', sans-serif;
+      background: #800020; /* Deep maroon background */
+      color: white;
+      overflow: hidden;
+      height: 100vh;
+    }
+
+    /* Starry Background */
+    .stars {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    /* Creating the star elements */
+    .star {
+      position: absolute;
+      background: white;
+      border-radius: 50%;
+      opacity: 0;
+      animation: twinkle 1.5s infinite ease-in-out, falling 10s linear infinite;
+    }
+
+    /* Twinkling Stars Animation */
+    @keyframes twinkle {
+      0% { opacity: 0.5; }
+      50% { opacity: 1; }
+      100% { opacity: 0.5; }
+    }
+
+    /* Falling Stars Animation */
+    @keyframes falling {
+      0% {
+        transform: translateY(-100%) translateX(0);
+      }
+      100% {
+        transform: translateY(100vh) translateX(30px);
+      }
+    }
+
+    /* Typewriter effect */
+    .typewriter {
+      font-size: 2.5rem;
+      line-height: 1.6;
+      margin: 30vh auto;
+      padding: 0 20px;
+      width: 80%;
+      text-align: center;
+      position: relative;
+      color: white;
+    }
+
+    .typewriter span {
+      display: inline-block;
+      opacity: 0;
+      animation: typing 3s steps(30) forwards;
+    }
+
+    @keyframes typing {
+      0% { opacity: 0; }
+      100% { opacity: 1; }
+    }
+
+    /* The buttons */
+    .buttons {
+      text-align: center;
+      margin-top: 12px; /* Pushed the buttons higher */
+      display: none; /* Hidden initially */
+    }
+
+    .buttons button {
+      background-color: #B22222; /* Dark red (lighter than the background) */
+      color: white; /* White text */
+      border: none;
+      padding: 15px 30px;
+      font-size: 1.5rem;
+      border-radius: 8px;
+      margin: 0 15px;
+      cursor: pointer;
+      transition: transform 0.3s;
+      box-shadow: 0 0 15px rgba(178, 34, 34, 0.6);
+    }
+
+    .buttons button:hover {
+      transform: scale(1.1);
+      box-shadow: 0 0 25px rgba(178, 34, 34, 1);
+    }
+
+  </style>
+</head>
+<body>
+
+  <!-- Starry Background -->
+  <div class="stars"></div>
+
+  <!-- Typewriter Text -->
+  <div class="typewriter">
+    <span id="line1">Sanjana, from the moment I met you, my world changed in the most beautiful way. Every time I see you, my heart skips a beat, and I can't help but feel incredibly lucky that you exist.</span>
+    <span id="line2" style="display:none;">You've brought so much joy into my life, and when we're apart, the days feel incomplete. But when we're together, everything feels perfect.</span>
+    <span id="line3" style="display:none;">You're my sunshine, my calm in the storm, and the one who makes my world spin. Will you be my Valentine?</span>
+  </div>
+
+  <!-- Yes/No Buttons -->
+  <div class="buttons">
+    <a href="yes.html"><button id="yesBtn">Yes</button></a>
+    <a href="no.html"><button id="noBtn">No</button></a>
+  </div>
+
+  <script>
+    // Typewriter effect script with timed animations
+    let currentLine = 0;
+    const lines = [
+      document.getElementById('line1'),
+      document.getElementById('line2'),
+      document.getElementById('line3')
+    ];
+
+    function typeLine() {
+      if (currentLine < lines.length) {
+        lines[currentLine].style.display = 'inline-block';
+        setTimeout(() => {
+          if (currentLine < 2) {  // Hide the first two sentences after they are typed
+            lines[currentLine].style.display = 'none';
+          }
+          currentLine++;
+          typeLine();
+        }, 12000); // Each sentence stays for 7 seconds
+      }
+    }
+
+    // Start typing when the page loads
+    window.onload = () => {
+      typeLine();
+      setTimeout(() => {
+        document.querySelector('.buttons').style.display = 'block'; // Show buttons after the typing effect finishes
+        document.getElementById('line3').style.display = 'inline-block'; // Make sure the last sentence stays visible
+      }, 31000); // 7 seconds per sentence * 3 sentences = 21 seconds
+    };
+
+    // Create random stars
+    const numStars = 100;
+    const starsContainer = document.querySelector('.stars');
+
+    for (let i = 0; i < numStars; i++) {
+      const star = document.createElement('div');
+      star.classList.add('star');
+      const size = Math.random() * 4 + 2;  // Increased size of stars to make them more visible
+      const left = Math.random() * 100;   // Random position
+      const top = Math.random() * 100;    // Random position
+      const animationDuration = Math.random() * 5 + 5 + 's';  // Random falling speed
+      const animationDelay = Math.random() * 2 + 's';  // Random delay for twinkling
+
+      star.style.width = size + 'px';
+      star.style.height = size + 'px';
+      star.style.left = left + '%';
+      star.style.top = top + '%';
+      star.style.animationDuration = animationDuration;
+      star.style.animationDelay = animationDelay;
+
+      starsContainer.appendChild(star);
+    }
+  </script>
+
+</body>
+</html>
